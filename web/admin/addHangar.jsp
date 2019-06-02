@@ -8,11 +8,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="includes/head.jsp" %>
+        <%@include file="../includes/head.jsp" %>
     </head>
     <body>
-        <%@include file="includes/navbar.jsp" %>
-            <div class="bookingbox box">
+        <%@include file="../includes/navbar.jsp" %>
+           <div class="bookingbox box">
+        <h1>Edit Airport</h1>
+        
+        <form action="AdminServlet">
+                <p>
+                    <label for="hangarnaam">hangar name:</label>
+                    <input type ="text" id="hangarnaam" value="" name="hangarnaam"/>
+                    
+                    <input type="hidden" value="" name="id"/>
+                    
+                </p>    
+                            
                 <div class="mx-auto text-center loginfield">
                      <form action="AdminServlet">
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
@@ -23,6 +34,8 @@
                             </div>
                      </form>
                 </div>
+                            </form>
+
             </div>
     </body>
 </html>

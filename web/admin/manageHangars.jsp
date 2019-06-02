@@ -27,16 +27,16 @@
                                 <tr>
                                     <td><%=hangar.getHangarNaam()%> </td>
                                     <div class="form-group logininputs">
-                                        <td><a class="loginbutton-m-bot-c" href="AdminServlet?luchtvaartEdit=<%=hangar.getId()%>" class="button">Edit</a></td>
+                                        <td><a class="loginbutton-m-bot-c" href="AdminServlet?hangarEdit=<%=hangar.getId()%>" class="button">Edit</a></td>
                                     </div>
                                     <div class="form-group logininputs">
-                                        <td><a class="cancelbutton-m-bot-c" href="AdminServlet?luchtvaartDelete=<%=hangar.getId()%>" class="button">Delete</a></td>
+                                        <td><a class="cancelbutton-m-bot-c" href="AdminServlet?hangarDelete=<%=hangar.getId()%>" class="button">Delete</a></td>
                                     </div>
                                 </tr>
                                 <%}%>
                             </table>
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
-                                <input class="loginbuttoncolors" type="submit" value="Add" name="airlineAddKnop"/>
+                                <input class="loginbuttoncolors" type="submit" value="Add" name="hangarAddKnop"/>
                             </div>
                         </form>
                 </div>

@@ -129,6 +129,7 @@ public class AdminServlet extends HttpServlet {
             }
         }
         
+        
         if (request.getParameter("airlineSaveAddKnop") != null) {
             String luchthavenNaam = request.getParameter("luchtvaartnaam");
             
@@ -137,6 +138,20 @@ public class AdminServlet extends HttpServlet {
                 ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
             request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
             rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
+            } else {
+                request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
+        
+         if (request.getParameter("hangarSaveAddKnop") != null) {
+            String hangarnaam = request.getParameter("hangarnaam");
+            
+            int id = 0;
+            if (daHangar.insertHangar(id, hangarnaam)) {
+                ArrayList<Hangar> hangaren = daHangar.getHangarGegevens();
+            request.setAttribute("hangars", hangaren);
+            rd = request.getRequestDispatcher("admin/manageHangars.jsp");
             } else {
                 request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
                 rd = request.getRequestDispatcher("error.jsp");
@@ -157,6 +172,20 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("error.jsp");
             }
         }
+        
+        if (request.getParameter("hangarDelete") != null) {
+            int hangerID = Integer.parseInt(request.getParameter("hangarDelete"));
+            boolean t = daHangar.deleteHangar(hangerID);
+            if (t) {
+                ArrayList<Hangar> hangars = daHangar.getHangarGegevens();
+                request.setAttribute("hangars", hangars);
+                rd = request.getRequestDispatcher("admin/manageHangars.jsp");
+            } else {
+                request.setAttribute("fout", "Verwijderen luchthaven is niet gelukt!");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
+        
         
          if (request.getParameter("AirlineDelete") != null) {
             int luchthavenId = Integer.parseInt(request.getParameter("AirlineDelete"));
@@ -247,6 +276,9 @@ public class AdminServlet extends HttpServlet {
         //add + save
         if (request.getParameter("airlineSaveAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
+        }
+        if (request.getParameter("hangarAddKnop") != null) {
+            rd = request.getRequestDispatcher("admin/addHangar.jsp");
         }
         if (request.getParameter("planesSaveAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/managePlanes.jsp");
