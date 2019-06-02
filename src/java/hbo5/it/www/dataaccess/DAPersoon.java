@@ -5,6 +5,7 @@
  */
 package hbo5.it.www.dataaccess;
 
+import hbo5.it.www.beans.Luchthaven;
 import hbo5.it.www.beans.Persoon;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -148,6 +150,39 @@ public class DAPersoon {
             }
         }
         return resultaat;
+    }
+
+    
+    
+    public ArrayList<Persoon> getPersonenGegevens() {
+        ArrayList<Persoon> Personen = new ArrayList<>();
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * from persoon ORDER BY id");) {
+            while (resultSet.next()) {
+                Persoon persoon = new Persoon();
+                persoon.setId(resultSet.getInt("id"));
+                persoon.setVoornaam(resultSet.getString("voornaam"));
+                persoon.setFamilienaam(resultSet.getString("familienaam"));
+                persoon.setStraat(resultSet.getString("straat"));
+                persoon.setHuisnummer(resultSet.getString("huisnr"));
+                persoon.setPostcode(resultSet.getString("postcode"));
+                persoon.setWoonplaats(resultSet.getString("woonplaats"));
+                persoon.setLand(resultSet.getString("land"));
+                persoon.setGeboortedatum(resultSet.getDate("geboortedatum"));
+                persoon.setLogin(resultSet.getString("login"));
+                persoon.setPaswoord(resultSet.getString("paswoord"));
+                //fout
+                //persoon.setSoort(resultSet.getNCharacterStream("soort"));
+                
+                Personen.add(persoon);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Personen;
     }
     
     

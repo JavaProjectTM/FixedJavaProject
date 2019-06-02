@@ -5,12 +5,16 @@
  */
 package hbo5.it.www;
 
+import hbo5.it.www.beans.Bemanningslid;
+import hbo5.it.www.beans.Functie;
 import hbo5.it.www.beans.Hangar;
 import hbo5.it.www.beans.Land;
 import hbo5.it.www.beans.Luchthaven;
 import hbo5.it.www.beans.Luchtvaartmaatschappij;
+import hbo5.it.www.beans.Persoon;
 import hbo5.it.www.beans.Vliegtuig;
 import hbo5.it.www.dataaccess.DABemanningslid;
+import hbo5.it.www.dataaccess.DAFunctie;
 import hbo5.it.www.dataaccess.DAHangar;
 import hbo5.it.www.dataaccess.DALand;
 import hbo5.it.www.dataaccess.DALuchthaven;
@@ -50,6 +54,8 @@ public class AdminServlet extends HttpServlet {
     public DAVluchtBemanning daFlightCrew = null;
     public DABemanningslid daCrew = null;
     public DAPersoon daPersoon = null;
+    public DAFunctie daFunctie = null;
+    
 
     @Override
     public void init() throws ServletException {
@@ -79,6 +85,10 @@ public class AdminServlet extends HttpServlet {
             if (daPersoon == null) {
                 daPersoon = new DAPersoon(url, login, password, driver);
             }
+            if (daFunctie == null) {
+                daFunctie = new DAFunctie(url, login, password, driver);
+            }
+            
 
         } catch (ClassNotFoundException e) {
             throw new ServletException(e);
@@ -113,6 +123,17 @@ public class AdminServlet extends HttpServlet {
         }
         
         if (request.getParameter("crewAddKnop") != null) {
+            ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
+            request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
+            ArrayList<Persoon> personen = daPersoon.getPersonenGegevens();
+            request.setAttribute("personen", personen);
+            ArrayList<Functie> functies = daFunctie.getFunctieGegevens();
+            request.setAttribute("functies", functies);
+            
+            rd = request.getRequestDispatcher("admin/addCrews.jsp");
+        }
+        
+        if (request.getParameter("crewAddKnop") != null) {
             ArrayList<Land> landen = daLand.getLandenGegevens();
             request.setAttribute("landen", landen);
             rd = request.getRequestDispatcher("admin/addCrews.jsp");
@@ -134,7 +155,22 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("admin/manageAirports.jsp");
             } else {
                 request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
+            }
+        }
+        
+        if (request.getParameter("crewSaveAddKnop") != null) {
+            int luchtvaartmaatschappijId = Integer.parseInt(request.getParameter("luchtvaartmaatschappijId"));
+            int persoonId = Integer.parseInt(request.getParameter("persoonId"));
+            int functieId = Integer.parseInt(request.getParameter("functieId"));
+            int id = 0;
+            if (daCrew.insertBemanningslid(id,functieId, luchtvaartmaatschappijId, persoonId)) {
+                ArrayList<Bemanningslid> bemanningsleden = daCrew.getBemanningsLeden();
+            request.setAttribute("bemanningsleden", bemanningsleden);
+            rd = request.getRequestDispatcher("admin/manageCrews.jsp");
+            } else {
+                request.setAttribute("fout", "toevoegen crewmember niet gelukt!");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
         
@@ -149,7 +185,7 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
             } else {
                 request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
         
@@ -163,7 +199,7 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/manageHangars.jsp");
             } else {
                 request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
 
@@ -178,7 +214,20 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("admin/manageAirports.jsp");
             } else {
                 request.setAttribute("fout", "Verwijderen luchthaven is niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
+            }
+        }
+        
+        if (request.getParameter("crewDelete") != null) {
+            int crewId = Integer.parseInt(request.getParameter("crewDelete"));
+            boolean t = daCrew.deleteBemanningslid(crewId);
+            if (t) {
+                ArrayList<Bemanningslid> bemanningsleden = daCrew.getBemanningsLeden();
+            request.setAttribute("bemanningsleden", bemanningsleden);
+            rd = request.getRequestDispatcher("admin/manageCrews.jsp");
+            } else {
+                request.setAttribute("fout", "Verwijderen bemanningslid is niet gelukt!");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
         
@@ -191,7 +240,7 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("admin/manageHangars.jsp");
             } else {
                 request.setAttribute("fout", "Verwijderen luchthaven is niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
         
@@ -205,7 +254,7 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
             } else {
                 request.setAttribute("fout", "Verwijderen luchthaven is niet gelukt!");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
 
@@ -238,7 +287,7 @@ public class AdminServlet extends HttpServlet {
 
             } else {
                 request.setAttribute("fout", "wijzigen niet gelukt");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
 
         }
@@ -252,7 +301,7 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
             } else {
                 request.setAttribute("fout", "wijzigen niet gelukt");
-                rd = request.getRequestDispatcher("error.jsp");
+                rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
 
@@ -273,6 +322,8 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/manageHangars.jsp");
         }
         if (request.getParameter("crewManageKnop") != null) {
+            ArrayList<Bemanningslid> bemanningsleden = daCrew.getBemanningsLeden();
+            request.setAttribute("bemanningsleden", bemanningsleden);
             rd = request.getRequestDispatcher("admin/manageCrews.jsp");
         }
         if (request.getParameter("flightCrewManageKnop") != null) {

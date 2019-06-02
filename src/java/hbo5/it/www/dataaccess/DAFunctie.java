@@ -6,10 +6,12 @@
 package hbo5.it.www.dataaccess;
 
 import  hbo5.it.www.beans.Functie;
+import hbo5.it.www.beans.Luchthaven;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -44,6 +46,28 @@ public class DAFunctie {
         }
         return functie;
 }
+
+    
+    public ArrayList<Functie> getFunctieGegevens() {
+        ArrayList<Functie> FunctieGegevens = new ArrayList<>();
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * from functie ORDER BY id");) {
+            while (resultSet.next()) {
+                Functie functie = new Functie();
+                functie.setId(resultSet.getInt("id"));
+                functie.setFunctieNaam(resultSet.getString("functienaam"));
+                functie.setOmschrijving(resultSet.getString("omschrijving"));
+                
+                FunctieGegevens.add(functie);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return FunctieGegevens;
+    }
     
     }
     
