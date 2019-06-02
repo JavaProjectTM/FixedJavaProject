@@ -1,0 +1,254 @@
+/*Table about page*/
+.BaseCss{
+    
+    margin-left: 50px;
+    color: white;
+}
+
+.caption{
+        margin-left: 50px;
+        margin-top: 10px !important;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 5px;
+    text-decoration: none;
+    color: initial;
+}
+#myInput, #myInput2, #myInput3, #myInput1, #myInputVertrekTijd, #myInputAankomstTijd {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+   /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+  width: 150px;
+  color: #fff;
+  
+}
+
+#myInput, #myInput2, #myInput3, #myInput1 ::placeholder{
+    color: white;
+}
+
+.VluchtTable {
+    
+   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 90% !important;
+  color: #fff;
+  margin-left: 50px !important;
+  margin-right: 50px !important;
+  color: white; 
+}
+
+#VluchtTable td, #VluchtTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: #fff;
+}
+
+#VluchtTable tr:nth-child(even){
+    background-color: #f2f2f2;
+    color: white !important;
+}
+
+#VluchtTable tr:hover {
+    background-color: #ddd;
+    color: white !important;
+}
+
+#VluchtTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+/*Table about page*/
+
+
+
+@font-face {
+    font-family: 'helveticaregular';
+    src: url('fonts/helvetica-webfont.woff2') format('woff2'),
+         url('fonts/helvetica-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'helveticaregular' !important;
+    background-image: url(../images/sky.jpg);
+}
+    
+.link-hover:hover{
+    color: #06D7BE !important;
+}
+
+.navbar{
+    height: 100px;
+}
+
+.nav-align{
+    margin-left: 50px;
+}
+
+.bookingbox{
+    margin-top: 5%;
+    min-height: 600px;
+    margin-left: 20%;
+    margin-right: 20%;    
+    background: #F5F5F5;
+}
+
+.managebox{ 
+    margin-top: 5%;
+    min-height: 400px;
+    margin-left: 30%;
+    margin-right: 30%;    
+    background: #F5F5F5;
+}
+
+.overviewbox{ 
+    margin-top: 5%;
+    min-height: 600px;
+    margin-left: 10%;
+    margin-right: 10%;    
+    background: #F5F5F5;
+}
+
+.nav-item{
+    
+    margin-top: 3px !important;
+}
+
+.box{
+    padding: 10px 10px 25px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.bottomfield{
+    background: #F5F5F5;
+    min-height: 80%;
+}
+
+.login{
+    margin-left: 300px;
+}
+
+input{
+    background-color: transparent !important;
+    border-width: 0;
+}
+
+.loginbox{
+    margin-top: 10%;
+    min-height: 350px;
+    margin-left: 35%;
+    margin-right: 35%;
+    background: #F5F5F5;
+}
+
+.login-m-bot{
+    margin-top: 4%;
+    margin-bottom: 10%;
+}
+
+.loginbutton-m-bot{
+    margin-bottom: 2%;
+    background-color: #06D7BE !important;
+    color:  #FFFFFF !important;
+    border-radius: 10px 10px 10px 10px;
+    padding: 1.5%;
+    cursor: pointer;
+}
+
+.loginbutton-m-bot-c{
+    margin-bottom: 2%;
+    background-color: #06D7BE !important;
+    color:  #FFFFFF !important;
+    border-radius: 3px 3px 3px 3px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.cancelbutton-m-bot{
+    margin-bottom: 2%;
+    background-color: #ff3333 !important;
+    color:  #FFFFFF !important;
+    border-radius: 10px 10px 10px 10px;
+    padding: 1.5%;
+    cursor: pointer;
+}
+
+.cancelbutton-m-bot-c{
+    margin-bottom: 2%;
+    background-color: #ff3333 !important;
+    color:  #FFFFFF !important;
+    border-radius: 3px 3px 3px 3px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.logininputs{
+    display:inline-block;
+}
+
+.logintextcolors{
+    color: #06D7BE !important;
+}
+
+.loginbuttoncolors{
+    color: #FFFFFF !important;
+}
+
+.loginbutton-m-bot:hover{
+    background-color: #00BDA9 !important;
+}
+
+.loginbutton-m-bot-c:hover{
+    background-color: #00BDA9 !important;
+    text-decoration: none;
+}
+
+.cancelbutton-m-bot:hover{
+    background-color: #e60000 !important;
+}
+
+.cancelbutton-m-bot-c:hover{
+    background-color: #e60000 !important;
+    text-decoration: none;
+}
+
+.form-control:focus {
+    border-color: #06D7BE !important;
+    box-shadow: 0 0 0 0.2rem rgba(6, 215, 190, 1)!important;
+}
+
+.bookingtextcolors{
+        color: #FFFFFF !important;
+        background-color: #06D7BE !important;
+        opacity: 70%;
+        margin-top:  20%;
+}
+
+
+.bookingtextcolors:hover{
+        opacity: 100%;
+}
+
+.logginError{
+    color: red !important;
+    margin-top: 15px !important;
+}
