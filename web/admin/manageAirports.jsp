@@ -46,7 +46,8 @@
                                 <%}%>
                             </table>
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
-                                <input class="loginbuttoncolors" type="submit" value="Add" name="airlineAddKnop"/>
+                                <input class="loginbuttoncolors" type="submit" value="Add" name="airportAddKnop"/>
+                                
                             </div>
                 </div>
             </div>

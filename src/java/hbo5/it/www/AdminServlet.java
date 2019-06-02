@@ -103,6 +103,26 @@ public class AdminServlet extends HttpServlet {
             request.setAttribute("daLand", daLand);
             rd = request.getRequestDispatcher("admin/manageAirports.jsp");
         }
+        
+        if(request.getParameter("airportAddKnop") != null){
+            rd = request.getRequestDispatcher("admin/addAirport.jsp");
+        }
+        
+        if(request.getParameter("airportSaveAddKnop") != null){
+                String luchthavenNaam = request.getParameter("luchthavennaam");
+                String stad = request.getParameter("stad");
+                int landId = Integer.parseInt(request.getParameter("landid"));
+                int id = 0;
+            if(daLuchtHaven.insertLuchthaven(id, luchthavenNaam, stad, landId)){
+                ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
+                request.setAttribute("luchthavens", luchthavens);
+                request.setAttribute("daLand", daLand);
+                rd = request.getRequestDispatcher("admin/manageAirports.jsp");
+            }else {
+                request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
 
         //moet verplaatst worden naar admin zoals alle andere dingen die alleen door admin mogen geopend worden.
         if (request.getParameter("luchtvaartDelete") != null) {

@@ -21,6 +21,7 @@ import java.util.Set;
 public class DALuchthaven {
 
     private final String url, login, password;
+    private int teller = 51;
 
     public DALuchthaven(String url, String login, String password, String driver) throws ClassNotFoundException {
         Class.forName(driver);
@@ -110,22 +111,30 @@ public class DALuchthaven {
         return resultaat;
     }
 
-    public boolean insertLuchthaven(String luchthavenNaam, String stad, int landId) {
+    public boolean insertLuchthaven(int id,String luchthavenNaam, String stad, int landId) {
         boolean resultaat = true;
-
+        id = teller;
         try (
                 Connection connection = DriverManager.getConnection(url, login, password);
-                PreparedStatement statement = connection.prepareStatement("insert into luchthaven (luchthavennaam, stad, land_id) "
-                        + "values (?,?,?)");) {
-            statement.setString(1, luchthavenNaam);
-            statement.setString(2, stad);
-            statement.setInt(3, landId);
+                //auto increment iets met seq.nextvalue.
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO LUCHTHAVEN"
+                        + "(ID, LUCHTHAVENNAAM, STAD, LAND_ID) VALUES"
+                        + "(?,?,?,?)");) {
+            
+                                                                                                  
+            statement.setInt(1, id);
+            statement.setString(2, luchthavenNaam);
+            statement.setString(3, stad);
+            statement.setInt(4, landId);
+            statement.executeUpdate();
         } catch (Exception e) {
             resultaat = false;
             e.printStackTrace();
 
         }
+        teller++;
         return resultaat;
+        
     }
      // Update
     public boolean updateLuchthaven(int id, String luchthavenNaam, String stad, int landId) {
