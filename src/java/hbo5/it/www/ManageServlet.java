@@ -5,15 +5,23 @@
  */
 package hbo5.it.www;
 
+import hbo5.it.www.beans.Boeking;
 import hbo5.it.www.beans.Passagier;
 import hbo5.it.www.beans.Persoon;
 import hbo5.it.www.beans.Vlucht;
 import hbo5.it.www.beans.VluchtBemanning;
+import hbo5.it.www.dataaccess.DABoeking;
 import hbo5.it.www.dataaccess.DAPassagier;
 import hbo5.it.www.dataaccess.DAVlucht;
 import hbo5.it.www.dataaccess.DAVluchtBemanning;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,6 +58,7 @@ public class ManageServlet extends HttpServlet {
     private DAVluchtBemanning davluchtbemanning = null;
     private DAPassagier daPassagier;
     private DAVlucht daVlucht;
+    private DABoeking daBoeking;
     
     public void init() throws ServletException{
         try{
@@ -69,6 +78,9 @@ public class ManageServlet extends HttpServlet {
              if (daVlucht == null){
                  daVlucht = new DAVlucht(url,login,password,driver);
              }
+             if (daBoeking == null){
+                 daBoeking = new DABoeking(url,login,password,driver);
+             }
         }
         catch(ClassNotFoundException e){
             throw new ServletException(e);
@@ -77,12 +89,17 @@ public class ManageServlet extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         
         if (request.getParameter("loginpageKnop") != null) {
             rd = request.getRequestDispatcher("login.jsp");
+        }
+         if (request.getParameter("boekKnop") != null) {
+            rd = request.getRequestDispatcher("booking.jsp");
+            ArrayList<Vlucht> vluchten = davlucht.getVluchtGegevens();
+            request.setAttribute("vluchten", vluchten);
         }
         if (request.getParameter("indexKnop") != null) {
             rd = request.getRequestDispatcher("index.jsp");
@@ -128,12 +145,22 @@ public class ManageServlet extends HttpServlet {
          request.setAttribute("vlucht", vlucht);
          rd.forward(request, response);
     }
-         if (request.getParameter("aantalVol")!=null) {
-        rd = request.getRequestDispatcher("booking.jsp");
+        if (request.getParameter("berekenKnop")!=null) {
+        rd = request.getRequestDispatcher("boekPrijs.jsp");
         int aantalVol = Integer.parseInt(request.getParameter("aantalVol"));
         int aantalKind = Integer.parseInt(request.getParameter("aantalKinderen"));
         int bagage = Integer.parseInt(request.getParameter("Bagage"));
         int hand = Integer.parseInt(request.getParameter("Handbagage"));
+      DateFormat formatter ; 
+        Date date=null ; 
+        formatter = new SimpleDateFormat("dd-MMM-yy");
+            try{
+             date = (Date)formatter.parse(request.getParameter("datum"));
+            } catch (ParseException ex) {
+                Logger.getLogger(ManageServlet.class.getName()).log(Level.SEVERE, null, ex);
+
+      }
+        Boeking boeking = new Boeking(1, Integer.parseInt(request.getParameter("id")), aantalVol, aantalKind, bagage, hand, request.getParameter("aankomst"), date ,0);
              if (bagage < 20) {
                  bagage = 0;
              }
@@ -147,10 +174,17 @@ public class ManageServlet extends HttpServlet {
                  hand = hand -10;
              }
              double prijs = ((aantalVol + (0.6 * aantalKind))*350)+ 25 + (10*bagage)+ (hand*5);
-             request.setAttribute("prijs", prijs);
+            boeking.setPrice(prijs);
+            request.setAttribute("boeking",boeking);
             }
+           if (request.getParameter("boek uw vlucht!") != null) {
+           Boeking boeking = (Boeking) request.getAttribute("boeking");
+           daBoeking.insertBoeking(boeking.getPassagier_id(),boeking.getId(),boeking.getAantalVolwassenen(),boeking.getAantalKinderen(),boeking.getBagage(),boeking.getHandbagage(),boeking.getAankomst(),boeking.getDatum(),boeking.getPrice());
+           rd = request.getRequestDispatcher("Geboekt.jsp");
+           }
             rd.forward(request, response);
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -27,14 +27,12 @@
 
             <table  id="#VluchtTable" class="table VluchtTable">
                 <tr>
-                    <th scope ="row" ><b>id</b></th>
                     <th><b>Aantal volwassenen</b></th>
                     <th><b>Aantal kinderen</b></th>
                     <th><b>Bagage</b></th>
                     <th><b>Handbagage</b></th>
                     <th><b>Aankomst</b></th>
                     <th><b>Datum</b></th>
-                    <th><b>Prijs</b></th>
                 </tr>
                 <tr>
                     <td>
@@ -46,22 +44,24 @@
                     </td>
                     <td>
                         <select name="aantalKinderen">
-                            <% for (int i = 1; i <= 10; i++) {%>
-                            <option value=<%=i%>><%=i%></option>
+                            <% for (int j = 1; j <= 10; j++) {%>
+                            <option value=<%=j%>><%=j%></option>
                             <%} %>
                         </select>
                     </td>
                     <td>
                         <select name="Bagage">
-                            <% for (int i = 1; i <= 10; i++) {%>
-                            <option value="tot <%=5 + i * 10%> kg"<%=5 + i * 10%></option>
+                            <% for (int k = 1; k <= 10; k++) {%>
+                            <% int gewicht = 5+(k*10);%>
+                            <option value="<%=gewicht%>">tot <%=gewicht%>kg</option>
                             <%}%>
                         </select>
                     </td>
                     <td>
                         <select name="Handbagage">
-                            <% for (int i = 1; i <= 10; i++) {%>
-                            <option value="tot <%=5 + i * 3%> kg"<%=5 + i * 3%></option>
+                            <% for (int l = 1; l <= 10; l++) {%>
+                            <% int massa = 5 + (l*10);%>
+                            <option value="tot <%=massa%>"> tot <%=massa%>kg</option>
                             <%}%>
                         </select>
                     </td>
@@ -77,28 +77,13 @@
                         <select name="Datum">
                             <% for (Vlucht aankomstVlucht : vluchten) {%>
                             <% Luchthaven aankomstL = aankomstVlucht.getAankomstLuchthaven();%>
-                            <% ArrayList<Vlucht> aankomende = new ArrayList(); %>
-                            <% aankomende.add(aankomstL);%>
-                            <% for (Vlucht checkV : aankomende) {%>
-                            <% if (checkV.getVertrekTijd() == aankomstL.getVertrekTijd()) {%>
-                            <%} else {%>
                             <option value="<%=aankomstL.getVertrekTijd()%>"><%=aankomstL.getVertrekTijd()%></option>
                             <%}%>
-                            <%}%>
-                            <%}%>
+                            
                         </select>
                     </td>
                     <td>
-                        <button><input type="submit" value="bereken prijs"></button>
-                        <% double prijs = (double) request.getAttribute("prijs");%>
-                        <p><%=prijs%></p>
-                        <!--stuur geselecteerde items door en bereken de prijs hiervan.-->
-                    </td>
-                    <td>
-                      <!--  <button>boek</button> -->
-                      <!-- maak een boeking object aan, knop pas tonen na prijs te berekenen -->
-                    </td>
-                    <td>
+                        <button name="berekenKnop"><input type="submit" value="bereken prijs"></button>
                     </td>
 
                 </tr>             
