@@ -33,6 +33,9 @@
                    <li class="nav-align nav-item">
                     <input type="submit"  class="link-hover text-white nav-link" action="submit" value="Agenda" name="crewKnop"></input>
                   </li>
+                  <li class="nav-align nav-item">
+                    <input type="submit"  class="link-hover text-white nav-link" action="submit" value="Boek" name="boekKnop"></input>
+                  </li>
                   <%String usernametry = (String)session.getAttribute("usernametry");
                   if(usernametry==null)  {%>   
                   <li class="nav-align nav-item login">

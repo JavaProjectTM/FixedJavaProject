@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class Boeking 
 {
+    int passagier_id;
     int id;
     int aantalVolwassenen;
     int aantalKinderen;
@@ -20,9 +21,9 @@ public class Boeking
     int Handbagage;
     String aankomst;
     Date datum;
-    int Price;
+    double Price;
 
-    public Boeking(int id, int aantalVolwassenen, int aantalKinderen, int bagage, int Handbagage, String aankomst, Date datum, int Price) {
+    public Boeking(int passagier_id, int id, int aantalVolwassenen, int aantalKinderen, int bagage, int Handbagage, String aankomst, Date datum, double Price) {
         this.id = id;
         this.aantalVolwassenen = aantalVolwassenen;
         this.aantalKinderen = aantalKinderen;
@@ -31,6 +32,15 @@ public class Boeking
         this.aankomst = aankomst;
         this.datum = datum;
         this.Price = Price;
+        this.passagier_id=passagier_id;
+    }
+
+    public int getPassagier_id() {
+        return passagier_id;
+    }
+
+    public void setPassagier_id(int passagier_id) {
+        this.passagier_id = passagier_id;
     }
 
     public int getId() {
@@ -89,11 +99,11 @@ public class Boeking
         this.datum = datum;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return Price;
     }
 
-    public void setPrice(int Price) {
+    public void setPrice(double Price) {
         this.Price = Price;
     }
     
