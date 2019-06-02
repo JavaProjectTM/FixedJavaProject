@@ -28,7 +28,6 @@
 
             <table  id="#VluchtTable" class="table VluchtTable">
                 <tr>
-                    <th scope ="row" ><b>id</b></th>
                     <th><b>Aantal volwassenen</b></th>
                     <th><b>Aantal kinderen</b></th>
                     <th><b>Bagage</b></th>
@@ -60,7 +59,7 @@
                         <%=boeking.getPrice()%>
                     </td>
                     <td>
-                      <button><input type="submit" value="boek uw vlucht!"></button>
+                      <button><input type="submit" name="Boekvlucht" value="boek uw vlucht!"></button>
                     </td>
                     <td>
                     </td>

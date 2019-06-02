@@ -44,7 +44,7 @@
                     </td>
                     <td>
                         <select name="aantalKinderen">
-                            <% for (int j = 1; j <= 10; j++) {%>
+                            <% for (int j = 0; j <= 10; j++) {%>
                             <option value=<%=j%>><%=j%></option>
                             <%} %>
                         </select>
@@ -61,7 +61,7 @@
                         <select name="Handbagage">
                             <% for (int l = 1; l <= 10; l++) {%>
                             <% int massa = 5 + (l*10);%>
-                            <option value="tot <%=massa%>"> tot <%=massa%>kg</option>
+                            <option value="<%=massa%>"> tot <%=massa%>kg</option>
                             <%}%>
                         </select>
                     </td>
@@ -83,7 +83,7 @@
                         </select>
                     </td>
                     <td>
-                        <button name="berekenKnop"><input type="submit" value="bereken prijs"></button>
+                        <button><input type="submit" name="berekenKnop" value="bereken prijs"></button>
                     </td>
 
                 </tr>             

@@ -89,7 +89,7 @@ public class ManageServlet extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         
@@ -146,21 +146,14 @@ public class ManageServlet extends HttpServlet {
          rd.forward(request, response);
     }
         if (request.getParameter("berekenKnop")!=null) {
-        rd = request.getRequestDispatcher("boekPrijs.jsp");
+        
+        int id = 1;
         int aantalVol = Integer.parseInt(request.getParameter("aantalVol"));
         int aantalKind = Integer.parseInt(request.getParameter("aantalKinderen"));
         int bagage = Integer.parseInt(request.getParameter("Bagage"));
         int hand = Integer.parseInt(request.getParameter("Handbagage"));
-      DateFormat formatter ; 
-        Date date=null ; 
-        formatter = new SimpleDateFormat("dd-MMM-yy");
-            try{
-             date = (Date)formatter.parse(request.getParameter("datum"));
-            } catch (ParseException ex) {
-                Logger.getLogger(ManageServlet.class.getName()).log(Level.SEVERE, null, ex);
-
-      }
-        Boeking boeking = new Boeking(1, Integer.parseInt(request.getParameter("id")), aantalVol, aantalKind, bagage, hand, request.getParameter("aankomst"), date ,0);
+        Date date=null; 
+        Boeking boeking = new Boeking(1, id, aantalVol, aantalKind, bagage, hand, request.getParameter("Aankomst"), date ,0.00);
              if (bagage < 20) {
                  bagage = 0;
              }
@@ -176,11 +169,12 @@ public class ManageServlet extends HttpServlet {
              double prijs = ((aantalVol + (0.6 * aantalKind))*350)+ 25 + (10*bagage)+ (hand*5);
             boeking.setPrice(prijs);
             request.setAttribute("boeking",boeking);
+            rd = request.getRequestDispatcher("boekPrijs.jsp");
             }
-           if (request.getParameter("boek uw vlucht!") != null) {
+           if (request.getParameter("Boekvlucht") != null) {
            Boeking boeking = (Boeking) request.getAttribute("boeking");
-           daBoeking.insertBoeking(boeking.getPassagier_id(),boeking.getId(),boeking.getAantalVolwassenen(),boeking.getAantalKinderen(),boeking.getBagage(),boeking.getHandbagage(),boeking.getAankomst(),boeking.getDatum(),boeking.getPrice());
-           rd = request.getRequestDispatcher("Geboekt.jsp");
+           daBoeking.insertBoeking(boeking.getPassagier_id(),boeking.getId(),boeking.getAantalVolwassenen(),boeking.getAantalKinderen(),boeking.getBagage(),boeking.getHandbagage(),boeking.getAankomst(),null,boeking.getPrice());
+               rd = request.getRequestDispatcher("Geboekt.jsp");
            }
             rd.forward(request, response);
     }
