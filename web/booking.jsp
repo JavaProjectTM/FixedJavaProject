@@ -79,6 +79,7 @@
                             <% Luchthaven aankomstL = aankomstVlucht.getAankomstLuchthaven();%>
                             <option value="<%=aankomstL.getVertrekTijd()%>"><%=aankomstL.getVertrekTijd()%></option>
                             <%}%>
+                            
                         </select>
                     </td>
                     <td>
