@@ -40,6 +40,7 @@ import javax.servlet.http.HttpSession;
     , @WebInitParam(name = "driver", value = "oracle.jdbc.driver.OracleDriver")})
 
 public class AdminServlet extends HttpServlet {
+
     public DALuchthaven daLuchtHaven = null;
     public DALuchtvaartmaatschappij daLuchtvaartmaatschappij = null;
     public DALand daLand = null;
@@ -48,7 +49,7 @@ public class AdminServlet extends HttpServlet {
     public DAVluchtBemanning daFlightCrew = null;
     public DABemanningslid daCrew = null;
     public DAPersoon daPersoon = null;
-    
+
     @Override
     public void init() throws ServletException {
         try {
@@ -77,11 +78,12 @@ public class AdminServlet extends HttpServlet {
             if (daPersoon == null) {
                 daPersoon = new DAPersoon(url, login, password, driver);
             }
-            
+
         } catch (ClassNotFoundException e) {
             throw new ServletException(e);
         }
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -95,30 +97,47 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher rd = null;
         HttpSession session = request.getSession();
-       
-        
+
         if (request.getParameter("airportManageKnop") != null) {
             ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
             request.setAttribute("luchthavens", luchthavens);
             request.setAttribute("daLand", daLand);
             rd = request.getRequestDispatcher("admin/manageAirports.jsp");
         }
-        
-        if(request.getParameter("airportAddKnop") != null){
+
+        if (request.getParameter("airportAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/addAirport.jsp");
         }
         
-        if(request.getParameter("airportSaveAddKnop") != null){
-                String luchthavenNaam = request.getParameter("luchthavennaam");
-                String stad = request.getParameter("stad");
-                int landId = Integer.parseInt(request.getParameter("landid"));
-                int id = 0;
-            if(daLuchtHaven.insertLuchthaven(id, luchthavenNaam, stad, landId)){
+        if (request.getParameter("airlineAddKnop") != null) {
+            rd = request.getRequestDispatcher("admin/addAirline.jsp");
+        }
+
+        if (request.getParameter("airportSaveAddKnop") != null) {
+            String luchthavenNaam = request.getParameter("luchthavennaam");
+            String stad = request.getParameter("stad");
+            int landId = Integer.parseInt(request.getParameter("landid"));
+            int id = 0;
+            if (daLuchtHaven.insertLuchthaven(id, luchthavenNaam, stad, landId)) {
                 ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
                 request.setAttribute("luchthavens", luchthavens);
                 request.setAttribute("daLand", daLand);
                 rd = request.getRequestDispatcher("admin/manageAirports.jsp");
-            }else {
+            } else {
+                request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
+        
+        if (request.getParameter("airlineSaveAddKnop") != null) {
+            String luchthavenNaam = request.getParameter("luchtvaartnaam");
+            
+            int id = 0;
+            if (daLuchtvaartmaatschappij.insertLuchthavenMaatschappij(id, luchthavenNaam)) {
+                ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
+            request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
+            rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
+            } else {
                 request.setAttribute("fout", "toevoegen luchthaven niet gelukt!");
                 rd = request.getRequestDispatcher("error.jsp");
             }
@@ -138,34 +157,67 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("error.jsp");
             }
         }
-
-            if (request.getParameter("luchtvaartEdit") != null) {
-                int luchthavenid2 = Integer.parseInt(request.getParameter("luchtvaartEdit"));
-                Luchthaven luchthaven2 = daLuchtHaven.getLuchtHavenGegevensById(luchthavenid2);
-                request.setAttribute("luchthaven", luchthaven2);
-                rd = request.getRequestDispatcher("admin/editLuchthaven.jsp");
-
-            }
-
-            if (request.getParameter("wijzig") != null) {
-                String luchthavenNaam = request.getParameter("luchthavennaam");
-                int id = Integer.parseInt(request.getParameter("id"));
-                String stad = request.getParameter("stad");
-                int landId = Integer.parseInt(request.getParameter("landid"));
-                if (daLuchtHaven.updateLuchthaven(id, luchthavenNaam, stad, landId)) {
-                    ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
-                    request.setAttribute("luchthavens", luchthavens);
-                    request.setAttribute("daLand", daLand);
-                    rd = request.getRequestDispatcher("admin/manageAirports.jsp");
-
-                }else{
-                    request.setAttribute("fout", "wijzigen niet gelukt");
-                    rd = request.getRequestDispatcher("error.jsp");
-                }
-
-            }
-
         
+         if (request.getParameter("AirlineDelete") != null) {
+            int luchthavenId = Integer.parseInt(request.getParameter("AirlineDelete"));
+            boolean t = daLuchtvaartmaatschappij.deleteLuchthavenmaatschappij(luchthavenId);
+            if (t) {
+                ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
+            request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
+            rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
+            } else {
+                request.setAttribute("fout", "Verwijderen luchthaven is niet gelukt!");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
+
+        if (request.getParameter("luchtvaartEdit") != null) {
+            int luchthavenid2 = Integer.parseInt(request.getParameter("luchtvaartEdit"));
+            Luchthaven luchthaven2 = daLuchtHaven.getLuchtHavenGegevensById(luchthavenid2);
+            request.setAttribute("luchthaven", luchthaven2);
+            rd = request.getRequestDispatcher("admin/editLuchthaven.jsp");
+        }
+
+        if (request.getParameter("AirlineEdit") != null) {
+            int luchthavenid2 = Integer.parseInt(request.getParameter("AirlineEdit"));
+            Luchtvaartmaatschappij luchthaven2 = daLuchtvaartmaatschappij.getLuchtHavenGegevensById(luchthavenid2);
+            request.setAttribute("luchtvaartmaatschappij", luchthaven2);
+            rd = request.getRequestDispatcher("admin/editAirline.jsp");
+        }
+        
+        
+
+        if (request.getParameter("wijzigLuchthaven") != null) {
+            String luchthavenNaam = request.getParameter("luchthavennaam");
+            int id = Integer.parseInt(request.getParameter("id"));
+            String stad = request.getParameter("stad");
+            int landId = Integer.parseInt(request.getParameter("landid"));
+            if (daLuchtHaven.updateLuchthaven(id, luchthavenNaam, stad, landId)) {
+                ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
+                request.setAttribute("luchthavens", luchthavens);
+                request.setAttribute("daLand", daLand);
+                rd = request.getRequestDispatcher("admin/manageAirports.jsp");
+
+            } else {
+                request.setAttribute("fout", "wijzigen niet gelukt");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+
+        }
+
+        if (request.getParameter("airlineSaveEditKnop") != null) {
+            String luchtvaartnaam = request.getParameter("luchtvaartnaam");
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (daLuchtvaartmaatschappij.updateLuchthavenMaatschappij(id, luchtvaartnaam)) {
+                ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
+                request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
+                rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
+            } else {
+                request.setAttribute("fout", "wijzigen niet gelukt");
+                rd = request.getRequestDispatcher("error.jsp");
+            }
+        }
+
         if (request.getParameter("airlineManageKnop") != null) {
             ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
             request.setAttribute("luchtvaartmaatschappijen", luchtvaartmaatschappijen);
@@ -191,9 +243,8 @@ public class AdminServlet extends HttpServlet {
         if (request.getParameter("PlanesInHaManageKnop") != null) {
             rd = request.getRequestDispatcher("admin/managePlanesInHangars.jsp");
         }
-        
+
         //add + save
-        
         if (request.getParameter("airlineSaveAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/manageAirlines.jsp");
         }
@@ -212,9 +263,8 @@ public class AdminServlet extends HttpServlet {
         if (request.getParameter("planesInHanSaveAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/managePlanesInHangars.jsp");
         }
-        
+
         //cancel
-        
         if (request.getParameter("planesInHanCancelKnop") != null) {
             rd = request.getRequestDispatcher("admin/managePlanesInHangars.jsp");
         }
@@ -233,9 +283,10 @@ public class AdminServlet extends HttpServlet {
         if (request.getParameter("flightCrewsCancelKnop") != null) {
             rd = request.getRequestDispatcher("admin/manageFlightCrews.jsp");
         }
-        
-        rd.forward(request, response);        
+
+        rd.forward(request, response);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

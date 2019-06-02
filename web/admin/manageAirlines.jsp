@@ -27,10 +27,10 @@
                                 <tr>
                                     <td><%=luchtvaartmaatschappij.getLuchtvaartNaam()%> </td>
                                 <div class="form-group logininputs">
-                                    <td><a class="loginbutton-m-bot-c" href="AdminServlet?luchtvaartEdit=<%=luchtvaartmaatschappij.getId()%>" class="button">Edit</a></td>
+                                    <td><a class="loginbutton-m-bot-c" href="AdminServlet?AirlineEdit=<%=luchtvaartmaatschappij.getId()%>" class="button">Edit</a></td>
                                 </div>
                                 <div class="form-group logininputs">
-                                    <td><a class="cancelbutton-m-bot-c" href="AdminServlet?luchtvaartDelete=<%=luchtvaartmaatschappij.getId()%>" class="button">Delete</a></td>
+                                    <td><a class="cancelbutton-m-bot-c" href="AdminServlet?AirlineDelete=<%=luchtvaartmaatschappij.getId()%>" class="button">Delete</a></td>
                                 </div>
                                 </tr>
                                 <%}%>

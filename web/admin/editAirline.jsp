@@ -4,6 +4,7 @@
     Author     : c1044217
 --%>
 
+<%@page import="hbo5.it.www.beans.Luchtvaartmaatschappij"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,19 @@
     </head>
     <body>
         <%@include file="../includes/navbar.jsp" %>
-            <div class="bookingbox box">
+        <div class="bookingbox box">
+        <h1>Edit Airport</h1>
+        <% Luchtvaartmaatschappij luchthavenMaatschappij = (Luchtvaartmaatschappij) request.getAttribute("luchtvaartmaatschappij");%>
+        
+        <form action="AdminServlet">
+                <p>
+                    <label for="luchtvaartnaam">luchthaven naam:</label>
+                    <input type ="text" id="luchtvaartnaam" value="<%=luchthavenMaatschappij.getLuchtvaartNaam()%>" name="luchtvaartnaam"/>
+                    
+                    <input type="hidden" value="<%=luchthavenMaatschappij.getId()%>" name="id"/>
+                    
+                </p>    
+                            
                 <div class="mx-auto text-center loginfield">
                      <form action="AdminServlet">
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
@@ -23,6 +36,15 @@
                             </div>
                      </form>
                 </div>
+                            </form>
+
             </div>
+
+        
+        
+        
+        
+        
+            
     </body>
 </html>
