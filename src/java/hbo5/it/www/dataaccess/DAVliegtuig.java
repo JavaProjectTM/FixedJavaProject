@@ -8,6 +8,7 @@ package hbo5.it.www.dataaccess;
 import hbo5.it.www.beans.Vliegtuig;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -69,7 +70,80 @@ public class DAVliegtuig {
          return VliegtuigGegevens  ;
     }
     
-    
+        public Vliegtuig getVliegtuigGegevensById(int id) {
+        Vliegtuig VliegtuigGegevens = new Vliegtuig();
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("SELECT * from Vliegtuig where id = ?");) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                VliegtuigGegevens.setId(resultSet.getInt("id"));
+                VliegtuigGegevens.setVliegtuigType_id(resultSet.getInt("vliegtuigtype_id"));
+                VliegtuigGegevens.setLuchtvaartMaatschappij_id(resultSet.getInt("luchtvaartmaatschappij_id"));
+                    
+                }
+               
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return VliegtuigGegevens;
+    }
+
+//    CRUD OPERATIES
+    //delete -- werkt alleen op alles aangezien luchthaven gekoppeld is aan andere dingen
+    public boolean deleteVliegtuig(int id) {
+        boolean resultaat = true;
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("delete from vliegtuig "
+                        + " where vliegtuig.id = ?");) {
+            statement.setInt(1, id);
+            statement.execute();
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+        }
+        return resultaat;
+    }
+
+    public boolean insertVliegtuig(int typeId, int maatschappijId) {
+        boolean resultaat = true;
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("insert into vliegtuig (vliegtuigtype_id, luchtvaartmaatschappij_id) "
+                        + "values (?,?)");) {
+            statement.setInt(1, typeId);
+            statement.setInt(2, maatschappijId);
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+
+        }
+        return resultaat;
+    }
+     // Update
+    public boolean updateVliegtuig(int id, int typeId, int maatschappijId) {
+        boolean resultaat = true;
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("update vliegtuig set vliegtuigtype_id=?, luchtvaartmaatschappij_id=? where id=?");) {
+               statement.setInt(1, typeId);
+               statement.setInt(2,maatschappijId);
+               statement.setInt(3, id);
+               
+               statement.executeUpdate();
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+        }
+
+        return resultaat;
+    }
     
     
 }

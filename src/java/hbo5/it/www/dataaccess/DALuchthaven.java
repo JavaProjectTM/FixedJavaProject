@@ -21,7 +21,7 @@ import java.util.Set;
 public class DALuchthaven {
 
     private final String url, login, password;
-    private int teller = 51;
+    private int teller = 111;
 
     public DALuchthaven(String url, String login, String password, String driver) throws ClassNotFoundException {
         Class.forName(driver);

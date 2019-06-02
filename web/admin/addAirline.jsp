@@ -12,7 +12,20 @@
     </head>
     <body>
         <%@include file="../includes/navbar.jsp" %>
-            <div class="bookingbox box">
+        
+        
+        <div class="bookingbox box">
+        <h1>Edit Airport</h1>
+        
+        <form action="AdminServlet">
+                <p>
+                    <label for="luchtvaartnaam">airline name:</label>
+                    <input type ="text" id="luchtvaartnaam" value="" name="luchtvaartnaam"/>
+                    
+                    <input type="hidden" value="" name="id"/>
+                    
+                </p>    
+                            
                 <div class="mx-auto text-center loginfield">
                      <form action="AdminServlet">
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
@@ -23,6 +36,8 @@
                             </div>
                      </form>
                 </div>
+                            </form>
+
             </div>
     </body>
 </html>

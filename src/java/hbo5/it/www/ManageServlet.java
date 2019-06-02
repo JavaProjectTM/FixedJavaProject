@@ -104,6 +104,11 @@ public class ManageServlet extends HttpServlet {
         if (request.getParameter("indexKnop") != null) {
             rd = request.getRequestDispatcher("index.jsp");
         }
+        if (request.getParameter("vluchtKnop") != null) {
+            rd = request.getRequestDispatcher("vluchten.jsp");
+            ArrayList<Vlucht> vluchten = davlucht.getVluchtGegevens();
+            request.setAttribute("vluchten", vluchten);
+        }
         if (request.getParameter("aboutKnop") != null) {
             rd = request.getRequestDispatcher("about.jsp");
             ArrayList<Vlucht> vluchten = davlucht.getVluchtGegevens();

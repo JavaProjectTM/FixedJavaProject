@@ -28,7 +28,7 @@
                       <a href="./booking.jsp" value > </a>
                   </li>
                   <li class="nav-align nav-item">
-                    <input type="submit"  class="link-hover text-white nav-link" action="submit" value="Vluchten" name="aboutKnop"></input>
+                    <input type="submit"  class="link-hover text-white nav-link" action="submit" value="Vluchten" name="vluchtKnop"></input>
                   </li>
                    <li class="nav-align nav-item">
                     <input type="submit"  class="link-hover text-white nav-link" action="submit" value="Agenda" name="crewKnop"></input>

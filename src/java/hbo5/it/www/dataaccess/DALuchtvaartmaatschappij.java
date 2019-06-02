@@ -5,6 +5,7 @@
  */
 package hbo5.it.www.dataaccess;
 
+import hbo5.it.www.beans.Luchthaven;
 import hbo5.it.www.beans.Luchtvaartmaatschappij;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class DALuchtvaartmaatschappij 
 {
     private final String url, login, password;
+    private int teller = 20;
 
     public DALuchtvaartmaatschappij(String url, String login, String password, String driver) throws ClassNotFoundException {
         Class.forName(driver);
@@ -88,6 +90,85 @@ public class DALuchtvaartmaatschappij
             }
         }
             return luchtvaartNaam;
+    }
+    public Luchtvaartmaatschappij getLuchtHavenGegevensById(int id) {
+        Luchtvaartmaatschappij LuchtHavenmaatschappijGegevens = new Luchtvaartmaatschappij();
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("SELECT * from luchtvaartmaatschappij where id = ?");) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                LuchtHavenmaatschappijGegevens.setId(resultSet.getInt("id"));
+                LuchtHavenmaatschappijGegevens.setLuchtvaartNaam(resultSet.getString("LUCHTVAARTNAAM"));
+                Luchtvaartmaatschappij test = LuchtHavenmaatschappijGegevens;
+                }
+               
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return LuchtHavenmaatschappijGegevens;
+    }
+
+//    CRUD OPERATIES
+    //delete -- werkt alleen op alles aangezien luchthaven gekoppeld is aan andere dingen
+    public boolean deleteLuchthavenmaatschappij(int id) {
+        boolean resultaat = true;
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("delete from luchtvaartmaatschappij "
+                        + " where id=?");) {
+            statement.setInt(1, id);
+            statement.execute();
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+        }
+        return resultaat;
+    }
+
+    public boolean insertLuchthavenMaatschappij(int id, String luchtvaartNaam) {
+        boolean resultaat = true;
+        id = teller;
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                //auto increment iets met seq.nextvalue.
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO luchtvaartmaatschappij"
+                        + "(ID, LUCHTVAARTNAAM) VALUES"
+                        + "(?,?)");) {
+            
+                                                                                                  
+            statement.setInt(1, id);
+            statement.setString(2, luchtvaartNaam);
+            
+            statement.executeUpdate();
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+
+        }
+        teller++;
+        return resultaat;
+        
+    }
+     // Update
+    public boolean updateLuchthavenMaatschappij(int id, String luchtvaartNaam) {
+        boolean resultaat = true;
+
+        try (
+                Connection connection = DriverManager.getConnection(url, login, password);
+                PreparedStatement statement = connection.prepareStatement("update luchtvaartmaatschappij set luchtvaartnaam=? where id=?");) {
+               statement.setString(1, luchtvaartNaam);
+               statement.setInt(2, id);
+               
+               statement.executeUpdate();
+        } catch (Exception e) {
+            resultaat = false;
+            e.printStackTrace();
+        }
+
+        return resultaat;
     }
     
 }

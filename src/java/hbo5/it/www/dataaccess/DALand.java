@@ -5,12 +5,14 @@
  */
 package hbo5.it.www.dataaccess;
 
+import hbo5.it.www.beans.Hangar;
 import hbo5.it.www.beans.Land;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -66,4 +68,28 @@ public class DALand {
         }
             return landNaam;
     }
+
+   
+    
+    public ArrayList<Land> getLandenGegevens() {
+          ArrayList<Land> LandGegevens = new ArrayList<>();
+        
+         try (
+             Connection connection = DriverManager.getConnection(url, login, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * from Land");)
+            {
+            while (resultSet.next()) {
+                Land land = new Land();
+                land.setId(resultSet.getInt("id"));
+                land.setLandnaam(resultSet.getString("LANDNAAM"));
+                LandGegevens.add(land);
+                            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         return LandGegevens  ;
+    }
+    
+    
 }

@@ -22,6 +22,7 @@ import hbo5.it.www.dataaccess.DAPassagier;
 import hbo5.it.www.dataaccess.DAPersoon;
 import hbo5.it.www.dataaccess.DAVliegtuig;
 import hbo5.it.www.dataaccess.DAVlucht;
+import hbo5.it.www.dataaccess.DAVluchtBemanning;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -54,7 +55,8 @@ public class InlogServlet extends HttpServlet {
     public DALuchtvaartmaatschappij daLuchtvaartmaatschappij = null;
     public DALand daLand = null;
     public DAHangar daHangar = null;
-    public DAVliegtuig daPlane = null;
+    public DAVliegtuig daPlane = null;    
+    public DAVluchtBemanning daVluchtbemanning = null;
     public String username = null;
     public String password = null;
     public String usernameError = null;
@@ -97,6 +99,9 @@ public class InlogServlet extends HttpServlet {
             }
             if (daPlane == null) {
                 daPlane = new DAVliegtuig(url, login, password, driver);
+            }
+            if (daVluchtbemanning == null) {
+                daVluchtbemanning = new DAVluchtBemanning(url, login, password, driver);
             }
             
         } catch (ClassNotFoundException e) {
@@ -151,6 +156,12 @@ public class InlogServlet extends HttpServlet {
             session.setAttribute("profilePersoon", profilePersoon);
             session.setAttribute("usernametry", usernameTry);
             rd = request.getRequestDispatcher("index.jsp");
+        }
+        
+        if (request.getParameter("crewKnop") != null) {
+              ArrayList<VluchtBemanning> agenda = daVluchtbemanning.getAgenda();
+              request.setAttribute("agenda", agenda);
+              rd = request.getRequestDispatcher("agendaCrew.jsp");
         }
 
         if (request.getAttribute("reisSchemaKnop") != null) {
