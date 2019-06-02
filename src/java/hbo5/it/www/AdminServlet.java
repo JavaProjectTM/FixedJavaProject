@@ -264,6 +264,13 @@ public class AdminServlet extends HttpServlet {
             request.setAttribute("luchthaven", luchthaven2);
             rd = request.getRequestDispatcher("admin/editLuchthaven.jsp");
         }
+        
+        if (request.getParameter("crewEdit") != null) {
+            int crewmemberid = Integer.parseInt(request.getParameter("crewEdit"));
+            Bemanningslid crewmember = daCrew.getBemanningslidGegevensById(crewmemberid);
+            request.setAttribute("crewmember", crewmember);
+            rd = request.getRequestDispatcher("admin/editCrews.jsp");
+        }
 
         if (request.getParameter("AirlineEdit") != null) {
             int luchthavenid2 = Integer.parseInt(request.getParameter("AirlineEdit"));
@@ -280,6 +287,24 @@ public class AdminServlet extends HttpServlet {
             String stad = request.getParameter("stad");
             int landId = Integer.parseInt(request.getParameter("landid"));
             if (daLuchtHaven.updateLuchthaven(id, luchthavenNaam, stad, landId)) {
+                ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
+                request.setAttribute("luchthavens", luchthavens);
+                request.setAttribute("daLand", daLand);
+                rd = request.getRequestDispatcher("admin/manageAirports.jsp");
+
+            } else {
+                request.setAttribute("fout", "wijzigen niet gelukt");
+                rd = request.getRequestDispatcher("admin/error.jsp");
+            }
+
+        }
+        
+        if (request.getParameter("wijzigCrew") != null) {
+            int luchtvaartmaatschappijid = Integer.parseInt(request.getParameter("luchtvaartmaatschappijid"));
+            int persoonid = Integer.parseInt(request.getParameter("persoonid"));
+            int functieid = Integer.parseInt(request.getParameter("functieid"));
+            int crewId = Integer.parseInt(request.getParameter("id"));
+            if (daCrew.updateBemanningslid(crewId, functieid, functieid, persoonid)) {
                 ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
                 request.setAttribute("luchthavens", luchthavens);
                 request.setAttribute("daLand", daLand);
