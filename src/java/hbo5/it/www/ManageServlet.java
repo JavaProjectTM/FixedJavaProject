@@ -93,6 +93,15 @@ public class ManageServlet extends HttpServlet {
         RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         
+        //Session teller
+        Integer aantal = (Integer) session.getAttribute("aantal");
+        if (aantal == null) {
+      aantal = 1;
+         } else {
+      aantal++;
+        }
+        //Session teller tot hier
+        
         if (request.getParameter("loginpageKnop") != null) {
             rd = request.getRequestDispatcher("login.jsp");
         }
@@ -176,6 +185,12 @@ public class ManageServlet extends HttpServlet {
            daBoeking.insertBoeking(boeking.getPassagier_id(),boeking.getId(),boeking.getAantalVolwassenen(),boeking.getAantalKinderen(),boeking.getBagage(),boeking.getHandbagage(),boeking.getAankomst(),null,boeking.getPrice());
                rd = request.getRequestDispatcher("Geboekt.jsp");
            }
+           
+           //Session teller
+         session.setAttribute("aantal", aantal);
+	RequestDispatcher se = request.getRequestDispatcher ("index.jsp");
+        se.forward(request, response);
+        //Session teller tot hier
             rd.forward(request, response);
     }
     

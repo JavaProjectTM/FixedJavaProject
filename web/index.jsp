@@ -67,5 +67,11 @@
         <%}
         }%>
         </form>
+        <!-- session teller-->
+            <p align="center"><font color="white">U hebt deze site
+             <strong> <%=session.getAttribute("aantal")%> maal </strong>bezocht.</p>
+            <p align="center">Uw sessie-id is  <strong> <%=session.getId()%> </strong> </font></p>
+
+             <div align="center"><a href="ManageServlet">Home</a></div>
     </body>
 </html>
