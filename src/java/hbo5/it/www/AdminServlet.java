@@ -112,6 +112,12 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/addAirport.jsp");
         }
         
+        if (request.getParameter("crewAddKnop") != null) {
+            ArrayList<Land> landen = daLand.getLandenGegevens();
+            request.setAttribute("landen", landen);
+            rd = request.getRequestDispatcher("admin/addCrews.jsp");
+        }
+        
         if (request.getParameter("airlineAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/addAirline.jsp");
         }

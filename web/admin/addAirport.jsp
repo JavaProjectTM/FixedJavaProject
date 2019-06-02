@@ -33,7 +33,7 @@
 <select name="landid">
                         <% for (Land land : landen) {%>
                         
-                            <option value="<%=land.getId()%>" id ="landidoption" name="landidoption"><%=land.getId()%> - <%=land.getLandnaam()%></option>
+                            <option value="<%=land.getId()%>" id ="landidoption" name="landidoption"><%=land.getLandnaam()%></option>
                         
                         <%}%>
 </select>
