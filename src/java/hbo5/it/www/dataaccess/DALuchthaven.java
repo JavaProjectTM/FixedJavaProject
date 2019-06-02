@@ -138,7 +138,7 @@ public class DALuchthaven {
                statement.setString(2,stad);
                statement.setInt(3,landId );
                statement.setInt(4, id);
-               statement.execute();
+               
                statement.executeUpdate();
         } catch (Exception e) {
             resultaat = false;

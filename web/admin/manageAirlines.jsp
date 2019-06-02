@@ -37,6 +37,7 @@
                             </table>
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
                                 <input class="loginbuttoncolors" type="submit" value="Add" name="airlineAddKnop"/>
+                                <a href="addAirport.jsp">Add new </a>
                             </div>
                         </form>
                 </div>

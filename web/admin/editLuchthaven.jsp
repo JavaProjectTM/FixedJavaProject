@@ -35,7 +35,7 @@
                             <div class="bookingbox box">
                 <div class="mx-auto text-center loginfield">
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
-                                <input class="loginbuttoncolors" type="submit" value="Save Changes" name="airportEditSaveKnop"/>
+                                <input class="loginbuttoncolors" type="submit" value="Save Changes" name="wijzig"/>
                             </div>
                             <div class="form-group cancelbutton-m-bot w-25 logininputs">
                                 <input class="loginbuttoncolors" type="submit" value="Cancel" name="cancelAirportKnop"/>

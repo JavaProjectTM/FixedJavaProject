@@ -134,7 +134,7 @@ public class AdminServlet extends HttpServlet {
                 int landId = Integer.parseInt(request.getParameter("landid"));
                 if (daLuchtHaven.updateLuchthaven(id, luchthavenNaam, stad, landId)) {
                     ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
-                    request.setAttribute("luchthaven", luchthavens);
+                    request.setAttribute("luchthavens", luchthavens);
                     request.setAttribute("daLand", daLand);
                     rd = request.getRequestDispatcher("admin/manageAirports.jsp");
 
