@@ -123,6 +123,27 @@ public class ManageServlet extends HttpServlet {
          request.setAttribute("vlucht", vlucht);
          rd.forward(request, response);
     }
+         if (request.getParameter("aantalVol")!=null) {
+        rd = request.getRequestDispatcher("booking.jsp");
+        int aantalVol = Integer.parseInt(request.getParameter("aantalVol"));
+        int aantalKind = Integer.parseInt(request.getParameter("aantalKinderen"));
+        int bagage = Integer.parseInt(request.getParameter("Bagage"));
+        int hand = Integer.parseInt(request.getParameter("Handbagage"));
+             if (bagage < 20) {
+                 bagage = 0;
+             }
+             else{
+                 bagage = bagage -20;
+             }
+             if (hand < 10) {
+                 hand = 0;
+             }
+             else{
+                 hand = hand -10;
+             }
+             double prijs = ((aantalVol + (0.6 * aantalKind))*350)+ 25 + (10*bagage)+ (hand*5);
+             request.setAttribute("prijs", prijs);
+            }
             rd.forward(request, response);
     }
 

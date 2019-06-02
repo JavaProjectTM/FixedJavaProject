@@ -89,7 +89,9 @@
                         </select>
                     </td>
                     <td>
-                        <button>bereken prijs</button>
+                        <button><input type="submit" value="bereken prijs"></button>
+                        <% double prijs = (double) request.getAttribute("prijs");%>
+                        <p><%=prijs%></p>
                         <!--stuur geselecteerde items door en bereken de prijs hiervan.-->
                     </td>
                     <td>
