@@ -6,6 +6,7 @@
 package hbo5.it.www;
 
 import hbo5.it.www.beans.Hangar;
+import hbo5.it.www.beans.Land;
 import hbo5.it.www.beans.Luchthaven;
 import hbo5.it.www.beans.Luchtvaartmaatschappij;
 import hbo5.it.www.beans.Vliegtuig;
@@ -106,6 +107,8 @@ public class AdminServlet extends HttpServlet {
         }
 
         if (request.getParameter("airportAddKnop") != null) {
+            ArrayList<Land> landen = daLand.getLandenGegevens();
+            request.setAttribute("landen", landen);
             rd = request.getRequestDispatcher("admin/addAirport.jsp");
         }
         
