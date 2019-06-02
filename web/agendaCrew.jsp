@@ -30,8 +30,9 @@
         <%ArrayList<VluchtBemanning> agenda = (ArrayList<VluchtBemanning>) request.getAttribute("agenda");%>
         
         
-        <h1>Alle vluchten</h1>
-        <table style="width:100%" id="#customers">
+        <h1 class="BaseCss">Alle vluchten</h1>
+        
+        <table  id="#VluchtTable" class="table VluchtTable">
 <tr>
     <th><b>id</b></th>
     <th><b>Code</b></th>
