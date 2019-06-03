@@ -134,11 +134,11 @@ public class AdminServlet extends HttpServlet {
             rd = request.getRequestDispatcher("admin/addCrews.jsp");
         }
         
-        if (request.getParameter("crewAddKnop") != null) {
-            ArrayList<Land> landen = daLand.getLandenGegevens();
-            request.setAttribute("landen", landen);
-            rd = request.getRequestDispatcher("admin/addCrews.jsp");
-        }
+//        if (request.getParameter("crewAddKnop") != null) {
+//            ArrayList<Land> landen = daLand.getLandenGegevens();
+//            request.setAttribute("landen", landen);
+//            rd = request.getRequestDispatcher("admin/addCrews.jsp");
+//        }
         
         if (request.getParameter("airlineAddKnop") != null) {
             rd = request.getRequestDispatcher("admin/addAirline.jsp");
@@ -315,13 +315,12 @@ public class AdminServlet extends HttpServlet {
             int functieid = Integer.parseInt(request.getParameter("functieid"));
             int crewId = Integer.parseInt(request.getParameter("id"));
             if (daCrew.updateBemanningslid(crewId, functieid, functieid, persoonid)) {
-                ArrayList<Luchthaven> luchthavens = daLuchtHaven.getLuchtHavenGegevens();
-                request.setAttribute("luchthavens", luchthavens);
-                request.setAttribute("daLand", daLand);
-                rd = request.getRequestDispatcher("admin/manageAirports.jsp");
+                ArrayList<Bemanningslid> bemanningsleden = daCrew.getBemanningsLeden();
+                request.setAttribute("bemanningsleden", bemanningsleden);
+                rd = request.getRequestDispatcher("admin/manageCrews.jsp");
 
             } else {
-                request.setAttribute("fout", "wijzigen niet gelukt");
+                request.setAttribute("fout", "wijzigen crewmember niet gelukt");
                 rd = request.getRequestDispatcher("admin/error.jsp");
             }
 
