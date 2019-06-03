@@ -46,26 +46,26 @@ public class DAVliegtuigType {
         return vliegtuigType;
     }
     
-            public String getVliegtuigTypeById(int id) {
-            String vliegtuigType = null;
-
+            public VliegtuigType getVliegtuigTypeById(int id) {
+            //String vliegtuigType = null;
+            VliegtuigType vliegtuigtype = new VliegtuigType();
         try (
                 Connection connection = DriverManager.getConnection(url, login, password);
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM VLIEGTUIGTYPE WHERE ID like ?");) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM VLIEGTUIGTYPE WHERE ID = ?");) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             
-            if (resultSet.next()) {
-                VliegtuigType vliegtuigtype = new VliegtuigType();
+            while (resultSet.next()) {
+                
+                vliegtuigtype.setId(resultSet.getInt("id"));
                 vliegtuigtype.setTypenaam(resultSet.getString("typenaam"));
-                vliegtuigType = vliegtuigtype.getTypenaam();
             }
         } catch (Exception e) {
             {
                 e.printStackTrace();
             }
         }
-            return vliegtuigType;
+            return vliegtuigtype;
     }
     
     

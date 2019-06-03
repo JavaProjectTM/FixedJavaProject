@@ -3,6 +3,8 @@
     Created on : May 29, 2019, 9:57:24 AM
     Author     : Sven
 --%>
+<%@page import="hbo5.it.www.beans.Luchtvaartmaatschappij"%>
+<%@page import="hbo5.it.www.beans.Vliegtuig"%>
 <%@page import="hbo5.it.www.beans.VliegtuigType"%>
 <%@page import="hbo5.it.www.beans.Luchthaven"%>
 <%@page import="hbo5.it.www.beans.Vlucht"%>
@@ -21,37 +23,50 @@
 
     </head>
     <body>
-
-        <form action="ManageServlet">
-            <%@include file="includes/navbar.jsp" %>
-
-
-            <h1 class="BaseCss">Vlucht details</h1>
-            <%Vlucht vluchtGegevens = (Vlucht) request.getAttribute("VluchtGegevens");%>
-
-            <%VliegtuigType VT = vluchtGegevens.getVliegtuigType();%>
-            <% Luchthaven VL = vluchtGegevens.getVertrekLuchthaven();%>
-            <%Luchthaven AL = vluchtGegevens.getAankomstLuchthaven();%>
-
-
-            <h2><%=vluchtGegevens.getId()%></h2>
-            <h2><%=vluchtGegevens.getCode()%></h2>
-            <h2><%=vluchtGegevens.getVertrekTijd()%></h2>
-            <h2><%=vluchtGegevens.getAankomstTijd()%></h2>
-            <h2><%=VT.getTypenaam()%></h2>
-            <h2><%=vluchtGegevens.getAankomstLuchthaven()%></h2>
-
-            
-            <h2><%=VL.getLuchthavennaam()%></h2>
-            <h2><%=AL.getLuchthavennaam()%></h2>
-            <h2><%=vluchtGegevens.getVertrekTijd()%></h2>
-            <h2><%=vluchtGegevens.getVertrekTijd()%></h2>
+        <%@include file="includes/navbar.jsp" %>
+        <div class="bookingbox box">
+            <form action="ManageServlet">
 
 
 
+                <div class="mx-auto text-center loginfield">
+                    <h1 class="caption">Vlucht details (kunnen met testen aangepast zijn)</h1>
+                    <%Vlucht vluchtGegevens = (Vlucht) request.getAttribute("VluchtGegevens");%>
+                    <%Vliegtuig vliegtuigGegevens = (Vliegtuig) request.getAttribute("VliegtuigGegevens");%>
+                    <%Luchthaven aankomstluchthavenGegevens = (Luchthaven) request.getAttribute("AankomstLuchthavenGegevens");%>
+                    <%Luchthaven vertrekluchthavenGegevens = (Luchthaven) request.getAttribute("VertrekLuchthavenGegevens");%>
+                    <%VliegtuigType vliegtuigTypeGegegevens = (VliegtuigType) request.getAttribute("vliegtuigTypeGegevens");%>
+                    <%Luchtvaartmaatschappij luchtvaartmaatschappijGegegevens = (Luchtvaartmaatschappij) request.getAttribute("luchtvaartmaatschappijGegegevens");%>
+                    <%int passagierCount=(Integer)request.getAttribute("personenCount");%>
 
 
-        </form>
 
-    </body>
+                    <h2>id: <%=vluchtGegevens.getId()%></h2>
+                    <h2>aantal passagiers: <%=passagierCount%></h2>
+                    <h2>Code: <%=vluchtGegevens.getCode()%></h2>
+                    <hr>
+                    <h2>Vertrektijd: <%=vluchtGegevens.getVertrekTijd()%></h2>
+                    <h2>aankomsttijd: <%=vluchtGegevens.getAankomstTijd()%></h2>
+                    <hr>
+                    <h2>Luchtvaartmaatschappij: <%=luchtvaartmaatschappijGegegevens.getLuchtvaartNaam()%></h2>
+                    <h2>Vliegtuigtype: <%=vliegtuigTypeGegegevens.getTypenaam()%></h2>
+                    <hr>
+                    <h2>Vertrekluchthaven:  <%=vertrekluchthavenGegevens.getLuchthavennaam()%></h2>
+                    <h2>Stad vertrekluchthaven:  <%=vertrekluchthavenGegevens.getStad()%></h2>
+                    <hr>
+                    <h2>Aankomstluchthaven:  <%=aankomstluchthavenGegevens.getLuchthavennaam()%></h2>
+                    <h2>Stad aankomstluchthaven:  <%=aankomstluchthavenGegevens.getStad()%></h2>
+
+
+
+
+
+
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
 </html>

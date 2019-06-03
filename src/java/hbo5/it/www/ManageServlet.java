@@ -6,12 +6,20 @@
 package hbo5.it.www;
 
 import hbo5.it.www.beans.Boeking;
+import hbo5.it.www.beans.Luchthaven;
+import hbo5.it.www.beans.Luchtvaartmaatschappij;
 import hbo5.it.www.beans.Passagier;
 import hbo5.it.www.beans.Persoon;
+import hbo5.it.www.beans.Vliegtuig;
+import hbo5.it.www.beans.VliegtuigType;
 import hbo5.it.www.beans.Vlucht;
 import hbo5.it.www.beans.VluchtBemanning;
 import hbo5.it.www.dataaccess.DABoeking;
+import hbo5.it.www.dataaccess.DALuchthaven;
+import hbo5.it.www.dataaccess.DALuchtvaartmaatschappij;
 import hbo5.it.www.dataaccess.DAPassagier;
+import hbo5.it.www.dataaccess.DAVliegtuig;
+import hbo5.it.www.dataaccess.DAVliegtuigType;
 import hbo5.it.www.dataaccess.DAVlucht;
 import hbo5.it.www.dataaccess.DAVluchtBemanning;
 import java.io.IOException;
@@ -59,6 +67,10 @@ public class ManageServlet extends HttpServlet {
     private DAPassagier daPassagier;
     private DAVlucht daVlucht;
     private DABoeking daBoeking;
+    private DALuchthaven daLuchthaven;
+    private DAVliegtuig daVliegtuig;
+    private DAVliegtuigType daVliegtuigType;
+    private DALuchtvaartmaatschappij daLuchtvaartmaatschappij;
     
     public void init() throws ServletException{
         try{
@@ -81,6 +93,19 @@ public class ManageServlet extends HttpServlet {
              if (daBoeking == null){
                  daBoeking = new DABoeking(url,login,password,driver);
              }
+             if (daLuchthaven == null){
+                 daLuchthaven = new DALuchthaven(url,login,password,driver);
+             }
+             if (daVliegtuig == null){
+                 daVliegtuig = new DAVliegtuig(url,login,password,driver);
+             }
+             if (daVliegtuigType == null){
+                 daVliegtuigType = new DAVliegtuigType(url,login,password,driver);
+             }
+             if (daLuchtvaartmaatschappij == null){
+                 daLuchtvaartmaatschappij = new DALuchtvaartmaatschappij(url,login,password,driver);
+             }
+             
         }
         catch(ClassNotFoundException e){
             throw new ServletException(e);
@@ -131,11 +156,31 @@ public class ManageServlet extends HttpServlet {
             rd = request.getRequestDispatcher("InlogServlet");
         }  
         if (request.getParameter("vluchtid") != null) {
+             //get vluchtgegevens
              int vluchtid = Integer.parseInt(request.getParameter("vluchtid")); 
-             //ArrayList<Vlucht> vluchten = davlucht.getVluchtGegevens(vluchtid);
              Vlucht VluchtGegevens = davlucht.getVluchtGegevens(vluchtid);
-             //methode aanpassen en vlucht object van maken
+             //get rest id's
+             int vliegtuigId = VluchtGegevens.getVliegtuig_id();
+             int aankomstLuchthavenId = VluchtGegevens.getAankomstluchthaven_id();
+             int vertrekLuchthavenId = VluchtGegevens.getVertrekluchthaven_id();
+             //gegevens by id
+             Luchthaven aankomstLuchthavenGegevens = daLuchthaven.getLuchtHavenGegevensById(aankomstLuchthavenId);
+             Luchthaven vertrekLuchthavenGegevens = daLuchthaven.getLuchtHavenGegevensById(vertrekLuchthavenId);
+             Vliegtuig vliegtuigGegevens = daVliegtuig.getVliegtuigGegevensById(vliegtuigId);
+             int vliegtuigTypeId = vliegtuigGegevens.getVliegtuigType_id();
+             VliegtuigType vliegtuigTypeGegevens = daVliegtuigType.getVliegtuigTypeById(vliegtuigTypeId);
+             
+             int luchtvaartmaatschappijId = vliegtuigGegevens.getLuchtvaartMaatschappij_id();
+             Luchtvaartmaatschappij luchtvaartmaatschappijGegegevens = daLuchtvaartmaatschappij.getLuchtHavenGegevensById(luchtvaartmaatschappijId);
+             
+             int personenCount = daPassagier.passagierCountOfVluchtById(vluchtid);
+             request.setAttribute("personenCount", personenCount);
+             request.setAttribute("luchtvaartmaatschappijGegegevens", luchtvaartmaatschappijGegegevens);
              request.setAttribute("VluchtGegevens", VluchtGegevens);
+             request.setAttribute("VliegtuigGegevens",vliegtuigGegevens);
+             request.setAttribute("AankomstLuchthavenGegevens", aankomstLuchthavenGegevens);
+             request.setAttribute("VertrekLuchthavenGegevens",vertrekLuchthavenGegevens);
+             request.setAttribute("vliegtuigTypeGegevens",vliegtuigTypeGegevens);
              rd = request.getRequestDispatcher("FlyDetails.jsp");
         }
         if (request.getParameter("passagiersVlucht")!=null){       
