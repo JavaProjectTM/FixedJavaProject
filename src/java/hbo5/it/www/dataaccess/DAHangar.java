@@ -128,7 +128,7 @@ public class DAHangar {
         
     }
      // Update
-    public boolean updateLuchthavenMaatschappij(int id, String hangarNaam) {
+    public boolean updateHangar(int id, String hangarNaam) {
         boolean resultaat = true;
 
         try (

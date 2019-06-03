@@ -14,37 +14,37 @@
     <body>
         <%@include file="../includes/navbar.jsp" %>
         <div class="bookingbox box">
-        <h1>Edit Airport</h1>
-        <% Luchtvaartmaatschappij luchthavenMaatschappij = (Luchtvaartmaatschappij) request.getAttribute("luchtvaartmaatschappij");%>
-        
-        <form action="AdminServlet">
+            <h1>Edit Airport</h1>
+            <% Luchtvaartmaatschappij luchthavenMaatschappij = (Luchtvaartmaatschappij) request.getAttribute("luchtvaartmaatschappij");%>
+
+            <form action="AdminServlet">
                 <p>
                     <label for="luchtvaartnaam">luchthaven naam:</label>
                     <input type ="text" id="luchtvaartnaam" value="<%=luchthavenMaatschappij.getLuchtvaartNaam()%>" name="luchtvaartnaam"/>
-                    
+
                     <input type="hidden" value="<%=luchthavenMaatschappij.getId()%>" name="id"/>
-                    
+
                 </p>    
-                            
+
                 <div class="mx-auto text-center loginfield">
-                     <form action="AdminServlet">
-                            <div class="form-group loginbutton-m-bot w-25 logininputs">
-                                <input class="loginbuttoncolors" type="submit" value="Save Changes" name="airlineSaveEditKnop"/>
-                            </div>
-                            <div class="form-group cancelbutton-m-bot w-25 logininputs">
-                                <input class="loginbuttoncolors" type="submit" value="Cancel" name="airlineCancelKnop"/>
-                            </div>
-                     </form>
+                    <form action="AdminServlet">
+                        <div class="form-group loginbutton-m-bot w-25 logininputs">
+                            <input class="loginbuttoncolors" type="submit" value="Save Changes" name="airlineSaveEditKnop"/>
+                        </div>
+                        <div class="form-group cancelbutton-m-bot w-25 logininputs">
+                            <input class="loginbuttoncolors" type="submit" value="Cancel" name="airlineCancelKnop"/>
+                        </div>
+                    </form>
                 </div>
-                            </form>
+            </form>
 
-            </div>
+        </div>
 
-        
-        
-        
-        
-        
-            
+
+
+
+
+
+
     </body>
 </html>

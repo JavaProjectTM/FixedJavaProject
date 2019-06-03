@@ -13,7 +13,7 @@
     <body>
         <%@include file="../includes/navbar.jsp" %>
            <div class="bookingbox box">
-        <h1>Edit Airport</h1>
+        <h1>Add hangar</h1>
         
         <form action="AdminServlet">
                 <p>

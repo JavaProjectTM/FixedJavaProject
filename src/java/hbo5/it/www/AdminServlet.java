@@ -265,6 +265,15 @@ public class AdminServlet extends HttpServlet {
             request.setAttribute("luchthaven", luchthaven2);
             rd = request.getRequestDispatcher("admin/editLuchthaven.jsp");
         }
+        if (request.getParameter("hangarEdit") != null) {
+            int hangarid = Integer.parseInt(request.getParameter("hangarEdit"));
+            Hangar hangar = daHangar.getHangarGegevensById(hangarid);
+            request.setAttribute("hangar", hangar);
+            rd = request.getRequestDispatcher("admin/editHangar.jsp");
+            
+            
+            
+        }
         
         if (request.getParameter("crewEdit") != null) {
             int crewmemberid = Integer.parseInt(request.getParameter("crewEdit"));
@@ -330,6 +339,19 @@ public class AdminServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("admin/error.jsp");
             }
         }
+        if (request.getParameter("hangarSaveEditKnop") != null) {
+            String hangarnaam = request.getParameter("hangarnaam");
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (daHangar.updateHangar(id, hangarnaam)){
+                ArrayList<Hangar> hangars = daHangar.getHangarGegevens();
+                request.setAttribute("hangars", hangars);
+                rd = request.getRequestDispatcher("admin/manageHangars.jsp");
+            } else {
+                request.setAttribute("fout", "wijzigen hangar niet gelukt");
+                rd = request.getRequestDispatcher("admin/error.jsp");
+            }
+        }
+        
 
         if (request.getParameter("airlineManageKnop") != null) {
             ArrayList<Luchtvaartmaatschappij> luchtvaartmaatschappijen = daLuchtvaartmaatschappij.getLuchtvaartmaatschappijGegevens();
