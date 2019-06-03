@@ -118,9 +118,11 @@ public class DAPassagier {
 
         try (
                 Connection connection = DriverManager.getConnection(url, login, password);
-                PreparedStatement statement = connection.prepareStatement("SELECT * from passagier where vlucht_id = ?");) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * from PASSAGIER where VLUCHT_ID = ?");) {
             statement.setInt(1, id);
+            
             ResultSet resultSet = statement.executeQuery();
+            
             while (resultSet.next()) {
                 Passagier passagier = new Passagier();
                 passagier.setId(resultSet.getInt("id"));
@@ -130,7 +132,7 @@ public class DAPassagier {
                 passagier.setPlaats(resultSet.getString("plaats"));
                 passagier.setPersoon_id(resultSet.getInt("persoon_id"));
                 passagier.setVlucht_id(resultSet.getInt("vlucht_id"));
-
+                Passagiers.add(passagier);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -58,14 +58,14 @@
                         <input type ="text" id="myInput2" onkeyup="SearchFunction2()" placeholder="Zoek" title="Typ hier de aankomsthaven">
                     </th>
                     <th>
-                        <input type ="text" id="myInput3" onkeyup="SearchFunction3()" placeholder="Zoek" title="Typ hier de aankomsthaven">
+                        
 
                     </th>
                     <th></th>
                 </tr>
 
                 <tr >
-                    <th scope ="row" ><b>id</b></th>
+                    
                     <th><b>Code</b></th>
                     <th><b>Vertrektijd</b></th>
                     <th><b>Aankomsttijd</b></th>
@@ -79,7 +79,7 @@
                 <% Luchthaven VL = vlucht.getVertrekLuchthaven();%>
                 <%Luchthaven AL = vlucht.getAankomstLuchthaven();%>
                 <tr>
-                    <td><%=vlucht.getId()%> </td>
+                    
                     <td><%=vlucht.getCode()%></td>
                     <td><%=vlucht.getVertrekTijd()%></td>
                     <td><%=vlucht.getAankomstTijd()%></td>

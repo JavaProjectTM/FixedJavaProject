@@ -41,7 +41,7 @@
 
 
 
-                    <h2>id: <%=vluchtGegevens.getId()%></h2>
+                    
                     <h2>aantal passagiers: <%=passagierCount%></h2>
                     <h2>Code: <%=vluchtGegevens.getCode()%></h2>
                     <hr>
