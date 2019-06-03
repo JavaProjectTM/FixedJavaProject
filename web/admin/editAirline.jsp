@@ -9,11 +9,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <%@include file="../includes/head.jsp" %>
     </head>
     <body>
+        
         <%@include file="../includes/navbar.jsp" %>
         <div class="bookingbox box">
+            <div class="mx-auto text-center loginfield">
             <h1>Edit Airport</h1>
             <% Luchtvaartmaatschappij luchthavenMaatschappij = (Luchtvaartmaatschappij) request.getAttribute("luchtvaartmaatschappij");%>
 
@@ -38,7 +41,7 @@
                 </div>
             </form>
 
-        </div>
+            </div></div>
 
 
 

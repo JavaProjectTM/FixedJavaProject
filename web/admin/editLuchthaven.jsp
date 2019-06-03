@@ -10,42 +10,45 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+
+        <%@include file="../includes/head.jsp" %>
     </head>
     <body>
-        <div id="content">
-            <h1>Edit Airport</h1>
-            <% Luchthaven luchthaven = (Luchthaven) request.getAttribute("luchthaven");%>
+        <%@include file="../includes/navbar.jsp" %>
+        <div class="bookingbox box">
+            <div class="mx-auto text-center loginfield">
 
-            <form action="AdminServlet">
-                <p>
-                    <label for="luchthavennaam">luchthaven naam:</label>
-                    <input type ="text" id="luchthavennaam" value="<%=luchthaven.getLuchthavennaam()%>" name="luchthavennaam"/>
-                    
-                    <label for="stad">stad :</label>
-                    <input type ="text" id="stad" value="<%=luchthaven.getStad()%>" name="stad"/>
-                    
-                    <label for="landid">land_id:</label>
+                <h1>Edit Airport</h1>
+                <% Luchthaven luchthaven = (Luchthaven) request.getAttribute("luchthaven");%>
 
-                    <input type ="text" id="landid" value="<%=luchthaven.getLand_id()%>" name="landid"/>
+                <form action="AdminServlet">
+                    <p>
+                        <label for="luchthavennaam">luchthaven naam:</label>
+                        <input type ="text" id="luchthavennaam" value="<%=luchthaven.getLuchthavennaam()%>" name="luchthavennaam"/>
 
-                    <input type="hidden" value="<%=luchthaven.getId()%>" name="id"/>
+                        <label for="stad">stad :</label>
+                        <input type ="text" id="stad" value="<%=luchthaven.getStad()%>" name="stad"/>
 
-                </p>    
-                            <div class="bookingbox box">
-                <div class="mx-auto text-center loginfield">
+                        <label for="landid">land_id:</label>
+
+                        <input type ="text" id="landid" value="<%=luchthaven.getLand_id()%>" name="landid"/>
+
+                        <input type="hidden" value="<%=luchthaven.getId()%>" name="id"/>
+
+                    </p>
                             <div class="form-group loginbutton-m-bot w-25 logininputs">
                                 <input class="loginbuttoncolors" type="submit" value="Save Changes" name="wijzigLuchthaven"/>
                             </div>
                             <div class="form-group cancelbutton-m-bot w-25 logininputs">
                                 <input class="loginbuttoncolors" type="submit" value="Cancel" name="cancelAirportKnop"/>
                             </div>
-                </div>
-                </div>
+                        
 
-            </form>
-
-
+                </form>
+            </div>
         </div>
-    </body>
+
+
+    </div>
+</body>
 </html>
